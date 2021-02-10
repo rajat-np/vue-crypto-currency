@@ -6,14 +6,16 @@
     </b-navbar>
     <div class="container">
       <h2 class="p-3 text-center">List of top 100 crypto currencies</h2>
-      <div class="paginate">
-        <select v-model="pageSize">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-        <div>
+      <div class="control-container">
+        <div class="pagesize">
+          <select class="dropdown custom-select" v-model="pageSize">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="paginate">
           <paginate
             :pageCount="this.limit / this.pageSize"
             :containerClass="'pagination'"
@@ -29,7 +31,7 @@
         <div class="loader" v-if="loading">
           <h1>Loading...</h1>
         </div>
-        <table class="striped hover">
+        <table class="table table-striped table-bordered">
           <tbody>
             <tr
               v-for="cryptoCurrency in cryptoCurrencies.slice(
@@ -98,7 +100,7 @@ export default {
     };
   },
   beforeDestroy() {
-    clearTimeout(this.fetchOnInterval)
+    clearTimeout(this.fetchOnInterval);
   },
 };
 </script>
