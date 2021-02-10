@@ -1,0 +1,76 @@
+.currency-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.paginate {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+}
+
+.paginate select {
+  background-color: #fff;
+  border: 1px solid #eee;
+  height: auto;
+  font-size: medium;
+  padding-left: 10px;
+  margin: 2px;
+}
+
+.paginate select:focus {
+  border-color: #17a2b8;
+  box-shadow: 0 0 5px #17a2b8;
+  outline: none;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.page-item {
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+}
+
+.next-item {
+  border: 1px solid #eee;
+  padding: 1rem;
+}
+
+.prev-item {
+  border: 1px solid #eee;
+  padding: 1rem;
+}
+
+.page-item.active {
+  border-radius: 0px;
+  position: static !important;
+  background-color: #17a2b8;
+  color: white;
+}
+
+.table-contents {
+  display: flex;
+  justify-content: center;
+}
+.table-contents table {
+  font-size: 1rem;
+  width: 50%;
+}
+
+.table-contents img {
+  width: 50px;
+  padding: 1rem;
+}
+
+.red {
+  color: darkred;
+}
+.green {
+  color: darkgreen;
+}
