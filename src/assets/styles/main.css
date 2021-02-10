@@ -11,9 +11,7 @@
   flex: 1
 }
 .paginate {
-  display: flex;
-  flex: 3;
-  float: right;
+  flex: 2;
   justify-content: flex-end;
 }
 

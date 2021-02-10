@@ -6,8 +6,8 @@
     </b-navbar>
     <div class="container">
       <h2 class="p-3 text-center">List of top 100 crypto currencies</h2>
-      <div class="control-container">
-        <div class="pagesize">
+      <div class="row control-container">
+        <div class="col pagesize">
           <select class="dropdown custom-select" v-model="pageSize">
             <option value="10">10</option>
             <option value="25">25</option>
@@ -15,7 +15,7 @@
             <option value="100">100</option>
           </select>
         </div>
-        <div class="paginate">
+        <div class="col paginate">
           <paginate
             :pageCount="this.limit / this.pageSize"
             :containerClass="'pagination'"
@@ -31,32 +31,35 @@
         <div class="loader" v-if="loading">
           <h1>Loading...</h1>
         </div>
-        <table class="table table-striped table-bordered">
-          <tbody>
-            <tr
-              v-for="cryptoCurrency in cryptoCurrencies.slice(
-                this.offset,
-                this.offset + this.pageSize
-              )"
-              v-bind:key="cryptoCurrency.id"
-            >
-              <th><img :src="cryptoCurrency.iconUrl" /></th>
-              <th>{{ cryptoCurrency.name }}</th>
-              <th>{{ cryptoCurrency.symbol }}</th>
-              <th>
-                {{ base.sign }}{{ parseFloat(cryptoCurrency.price).toFixed(2) }}
-              </th>
-              <th
-                :class="{
-                  red: cryptoCurrency.change < 0,
-                  green: cryptoCurrency.change >= 0,
-                }"
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <tbody>
+              <tr
+                v-for="cryptoCurrency in cryptoCurrencies.slice(
+                  this.offset,
+                  this.offset + this.pageSize
+                )"
+                v-bind:key="cryptoCurrency.id"
               >
-                {{ cryptoCurrency.change }}%
-              </th>
-            </tr>
-          </tbody>
-        </table>
+                <th><img :src="cryptoCurrency.iconUrl" /></th>
+                <th>{{ cryptoCurrency.name }}</th>
+                <th>{{ cryptoCurrency.symbol }}</th>
+                <th>
+                  {{ base.sign
+                  }}{{ parseFloat(cryptoCurrency.price).toFixed(2) }}
+                </th>
+                <th
+                  :class="{
+                    red: cryptoCurrency.change < 0,
+                    green: cryptoCurrency.change >= 0,
+                  }"
+                >
+                  {{ cryptoCurrency.change }}%
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
