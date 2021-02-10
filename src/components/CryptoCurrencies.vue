@@ -6,6 +6,25 @@
     </b-navbar>
     <div class="container">
       <h2 class="p-3 text-center">List of top 100 crypto currencies</h2>
+      <div class="paginate">
+        <select v-model="pageSize">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <div>
+          <paginate
+            :pageCount="this.limit / this.pageSize"
+            :containerClass="'pagination'"
+            :clickHandler="changePage"
+            :pageClass="'page-item'"
+            :nextClass="'next-item'"
+            :prevClass="'prev-item'"
+          >
+          </paginate>
+        </div>
+      </div>
       <div class="table-contents">
         <div class="loader" v-if="loading">
           <h1>Loading...</h1>
@@ -13,7 +32,10 @@
         <table class="striped hover">
           <tbody>
             <tr
-              v-for="cryptoCurrency in cryptoCurrencies.slice(this.offset, this.offset + this.pageSize)"
+              v-for="cryptoCurrency in cryptoCurrencies.slice(
+                this.offset,
+                this.offset + this.pageSize
+              )"
               v-bind:key="cryptoCurrency.id"
             >
               <th><img :src="cryptoCurrency.iconUrl" /></th>
@@ -34,25 +56,6 @@
           </tbody>
         </table>
       </div>
-      <div class="paginate">
-        <select v-model="pageSize">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-        <div>
-          <paginate
-            :pageCount="10"
-            :containerClass="'pagination'"
-            :clickHandler="changePage"
-            :pageClass="'page-item'"
-            :nextClass="'next-item'"
-            :prevClass="'prev-item'"
-          >
-          </paginate>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -61,6 +64,8 @@
 import { mapGetters } from "vuex";
 import Paginate from "vuejs-paginate";
 
+import { LIMIT } from "../constants";
+
 export default {
   name: "CryptoCurrencies",
   components: {
@@ -68,15 +73,15 @@ export default {
   },
   watch: {
     pageSize: function (value) {
-      this.pageSize = value
+      this.pageSize = parseInt(value);
     },
   },
   mounted() {
     this.$store.dispatch("fetchCryptoCurrencies");
   },
   methods: {
-    changePage: function(pageNum) {
-      this.offset = pageNum * this.pageSize;
+    changePage: function (pageNum) {
+      this.offset = (pageNum - 1) * this.pageSize;
     },
   },
   computed: mapGetters(["cryptoCurrencies", "stats", "base", "loading"]),
@@ -84,6 +89,7 @@ export default {
     return {
       offset: 0,
       pageSize: 10,
+      limit: LIMIT,
     };
   },
 };
