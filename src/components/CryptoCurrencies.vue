@@ -64,7 +64,7 @@
 import { mapGetters } from "vuex";
 import Paginate from "vuejs-paginate";
 
-import { LIMIT } from "../constants";
+import { LIMIT, INTERVAL } from "../constants";
 
 export default {
   name: "CryptoCurrencies",
@@ -78,6 +78,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchCryptoCurrencies");
+    this.fetchOnInterval = setInterval(() => {
+      this.$store.dispatch("fetchCryptoCurrencies");
+    }, this.interval);
   },
   methods: {
     changePage: function (pageNum) {
@@ -90,7 +93,12 @@ export default {
       offset: 0,
       pageSize: 10,
       limit: LIMIT,
+      fetchOnInterval: null,
+      interval: INTERVAL,
     };
+  },
+  beforeDestroy() {
+    clearTimeout(this.fetchOnInterval)
   },
 };
 </script>
